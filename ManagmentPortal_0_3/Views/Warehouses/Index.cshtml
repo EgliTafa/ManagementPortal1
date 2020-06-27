@@ -1,0 +1,160 @@
+﻿@model IEnumerable<ManagmentPortal_0_3.Models.Warehouse>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+
+<style>
+    #buttonRight {
+        float: right;
+        margin-right: auto;
+    }
+</style>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>List of all Warehouses</h1>
+
+@if (signInManager.IsSignedIn(User))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Add New</a>
+        <a id="buttonRight" class="btn btn-success" href="@Url.Action("ExportToExcel", "Warehouses")">Export To Excel</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Area) (m2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descriptiom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfWorkers)
+                </th>
+                <th>
+                    <a asp-controller="Sectors">@Html.DisplayNameFor(model => model.Sector) </a>
+                </th>
+                <th>
+                    <a asp-controller="Managers">@Html.DisplayNameFor(model => model.Manager)</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descriptiom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfWorkers)
+                    </td>
+                    <td>
+                        @if (item.Sector.SectorId == 1 || item.Sector.SectorId == 2)
+                        {
+                            @Html.DisplayFor(modelItem => item.Sector.SectorName)
+                        }
+                    </td>
+                    <td>
+                        @if (item.Manager.ManagerId == 1)
+                        {
+                            @Html.DisplayFor(modelItem => item.Manager.ManagerName)
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.WarehouseId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.WarehouseId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.WarehouseId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Area) (m2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Location)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descriptiom)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Owner)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NumberOfWorkers)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sector)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Manager)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descriptiom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Owner)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfWorkers)
+                    </td>
+                    <td>
+                        @if (item.Sector.SectorId == 1 || item.Sector.SectorId == 2)
+                        {
+                            @Html.DisplayFor(modelItem => item.Sector.SectorName)
+                        }
+                    </td>
+                    <td>
+                        @if (item.Manager.ManagerId == 1)
+                        {
+                            @Html.DisplayFor(modelItem => item.Manager.ManagerName)
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.WarehouseId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

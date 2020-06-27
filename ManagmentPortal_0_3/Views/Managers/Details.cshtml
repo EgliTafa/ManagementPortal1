@@ -1,0 +1,44 @@
+﻿@model ManagmentPortal_0_3.Models.Manager
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<IdentityUser> signInManager;
+
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Manager #@Model.ManagerId</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ManagerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ManagerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+</div>
+
+@if (signInManager.IsSignedIn(User))
+{
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ManagerId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+else
+{
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
